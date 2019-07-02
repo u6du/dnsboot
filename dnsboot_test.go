@@ -2,12 +2,15 @@ package dnsboot
 
 import (
 	"testing"
-
-	"github.com/u6du/dns"
 )
 
 func TestRoot(t *testing.T) {
-	BootLi(4, &dns.V4)
-	BootLi(6, &dns.V6)
+
+	test := func(network uint8) {
+		udpLi := BootLi(network)
+		t.Logf("ipv%d %s", network, udpLi)
+	}
+	test(4)
+	test(6)
 
 }

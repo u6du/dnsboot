@@ -10,7 +10,8 @@ import (
 var HostBootDefault = "ip.6du.host"
 var HostBootPath = "dns/host/boot/"
 
-func BootLi(network uint8, nameserver *dns.Dns) []*net.UDPAddr {
+func BootLi(network uint8) []*net.UDPAddr {
+	nameserver := dns.DNS[network]
 	networkString := string([]byte{network + 48})
 	host := networkString + "." + HostBootDefault
 	v4host := config.File.OneLine(HostBootPath+networkString, host)
