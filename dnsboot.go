@@ -5,7 +5,7 @@ import (
 
 	"github.com/u6du/config"
 	"github.com/u6du/dns"
-	"github.com/u6du/zerolog/log"
+	"github.com/u6du/zerolog/info"
 )
 
 var HostBootDefault = "ip.6du.host"
@@ -25,8 +25,7 @@ func BootLi(network uint8, dns *dns.Dns) []*net.UDPAddr {
 			ipLi = t
 			return true
 		}
-
-		log.Info().Err(err).End()
+		info.Err(err).End()
 
 		switch err {
 		case ErrTimeout:
