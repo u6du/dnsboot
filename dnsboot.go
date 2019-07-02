@@ -11,14 +11,15 @@ import (
 var HostBootDefault = "ip.6du.host"
 var HostBootPath = "dns/host/boot/"
 
-func BootLi(network uint8, dns *dns.Dns) []*net.UDPAddr {
-
+func BootLi(network uint8, nameserver *dns.Dns) []*net.UDPAddr {
 	networkString := string([]byte{network + 48})
-	v4host := config.File.OneLine(HostBootPath+networkString, networkString+"."+HostBootDefault)
+	info.Msg(networkString)
+	host := networkString + "." + HostBootDefault
+	v4host := config.File.OneLine(HostBootPath+networkString, host)
 
 	var ipLi []byte
 
-	r := dns.Txt(v4host, func(txt string) bool {
+	r := nameserver.Txt(v4host, func(txt string) bool {
 		t, err := Verify(txt)
 
 		if err == nil {
@@ -34,14 +35,32 @@ func BootLi(network uint8, dns *dns.Dns) []*net.UDPAddr {
 		return false
 	})
 
-	if r != nil {
-		println("len ipLi ", len(ipLi))
+	if r == nil {
+		timeoutCount := 1
+		dns.DotTxt(host, func(txt string) bool {
+			info.Msg("dot txt")
+			t, err := Verify(txt)
 
-		if len(ipLi) > 0 {
-			return UDPAddr[network](ipLi)
-		}
-	} else {
-		dns.DotTxt
+			if err == nil {
+				ipLi = t
+				return true
+			}
+
+			switch err {
+			case ErrTimeout:
+				ipLi = t
+				if timeoutCount > 1 {
+					return true
+				} else {
+					timeoutCount++
+				}
+			}
+			return false
+		})
+	}
+
+	if len(ipLi) > 0 {
+		return UDPAddr[network](ipLi)
 	}
 
 	return []*net.UDPAddr{}
