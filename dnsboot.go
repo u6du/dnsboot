@@ -26,6 +26,7 @@ func BootLi(network uint8, dns *dns.Dns) []*net.UDPAddr {
 			return true
 		}
 		info.Err(err).End()
+		info.Msg(err.Error())
 
 		switch err {
 		case ErrTimeout:
