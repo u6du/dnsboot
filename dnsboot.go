@@ -12,7 +12,7 @@ func main() {
 
 	v4host := config.File.OneLine(hostPath+"4", "ip4."+HostBootDefault)
 
-	v4txt := dns.ResolveTxtV4(v4host, func(s string) bool {
+	v4txt := dns.V4.Txt(v4host, func(s string) bool {
 		println("ip4  ", s)
 		return true
 	})
