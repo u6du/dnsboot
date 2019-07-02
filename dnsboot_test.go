@@ -1,12 +1,10 @@
-package dnsboot
+package test
 
 import (
 	"github.com/u6du/dns"
-
-	"testing"
+	"github.com/u6du/dnsboot"
 )
 
-func TestBoot(t *testing.T) {
-	t.Log("v4", BootLi(4, &dns.V4))
-
+func t) {
+	dnsboot.BootLi(4, &dns.V4)
 }
