@@ -8,4 +8,6 @@ import (
 
 func TestRoot(t *testing.T) {
 	BootLi(4, &dns.V4)
+	BootLi(6, &dns.V6)
+
 }
