@@ -53,8 +53,7 @@ func BootLi(network uint8) []*net.UDPAddr {
 						ipLi = t
 					}
 					if timeoutCount > 1 {
-
-						warn.Msg("IPV" + networkString + " using expired boot ip")
+						warn.Msg("ipv" + networkString + " boot ip dns txt record expired")
 						return true
 					} else {
 						timeoutCount++

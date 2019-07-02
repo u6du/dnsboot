@@ -3,11 +3,11 @@ package dnsboot
 import (
 	"testing"
 
-	"github.com/u6du/zerolog/info"
+	"github.com/u6du/zerolog/debug"
 )
 
 func TestRoot(t *testing.T) {
-	info.Msg("test")
+	debug.Msg("test")
 	test := func(network uint8) {
 		udpLi := BootLi(network)
 		t.Logf("ipv%d %s", network, udpLi)
