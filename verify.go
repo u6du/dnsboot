@@ -7,6 +7,7 @@ import (
 
 	"github.com/u6du/go-rfc1924/base85"
 	key "github.com/u6du/key/ed25519"
+	"github.com/u6du/zerolog/info"
 	"golang.org/x/crypto/ed25519"
 )
 
@@ -17,7 +18,7 @@ var (
 	ErrEmpty   = errors.New("empty")
 )
 
-const TimeOutHour = uint32(1)
+const TimeOutHour = uint32(4)
 
 func Decode(txt string) ([]byte, error) {
 	b, err := base85.DecodeString(txt)
@@ -38,9 +39,11 @@ func Verify(txt string) ([]byte, error) {
 			hour := ctx[0:4]
 			ctx := ctx[4:]
 
-			cost := uint32(time.Now().Unix()/3600) - binary.LittleEndian.Uint32(hour)
+			timeDiffHour := uint32(time.Now().Unix()/3600) - binary.LittleEndian.Uint32(hour)
+			info.Uint32("timeDiffHour", timeDiffHour).End()
+
 			var state error
-			if cost >= TimeOutHour {
+			if timeDiffHour >= TimeOutHour {
 				state = ErrTimeout
 			} else {
 				state = nil
