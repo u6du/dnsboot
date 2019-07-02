@@ -1,6 +1,9 @@
-package main
+package dnsboot
 
 import (
+	"net"
+
+	"github.com/u6du/zerolog/log"
 	"github.com/u6du/config"
 	"github.com/u6du/dns"
 )
@@ -8,19 +11,37 @@ import (
 var HostBootDefault = "ip.6du.host"
 var HostBootPath = "dns/host/boot/"
 
-func BootLi(net string, dns *dns.Dns) {
+func BootLi(network uint8, dns *dns.Dns) []*net.UDPAddr {
 
-	v4host := config.File.OneLine(HostBootPath+net, net+"."+HostBootDefault)
+	networkString := string([]byte{network + 48})
+	v4host := config.File.OneLine(HostBootPath+networkString, networkString+"."+HostBootDefault)
 
-	v4txt := dns.Txt(v4host, func(s string) bool {
-		println("ipv", net, "  ", s)
-		return true
+	var ipLi []byte
+
+	r := dns.Txt(v4host, func(txt string) bool {
+		t, err := Verify(txt)
+
+		if err == nil {
+			ipLi = t
+			return true
+		}
+
+		log.Info().Err(err).Msg("")
+
+		switch err {
+		case ErrTimeout:
+			ipLi = t
+		}
+		return false
 	})
-	println(v4txt)
-}
 
-func main() {
-	BootLi("4", &dns.V4)
-	//	var HostTestTxt = config.File.OneLine("dns/host/test/txt", "g.cn")
+	if r != nil {
+		println("len ipLi ", len(ipLi))
 
+		if len(ipLi) > 0 {
+			return UDPAddr[network](ipLi)
+		}
+	}
+
+	return []*net.UDPAddr{}
 }
