@@ -17,7 +17,7 @@ var (
 	ErrEmpty   = errors.New("empty")
 )
 
-const TimeOutHour = uint32(12)
+const TimeOutHour = uint32(3)
 
 func Decode(txt string) ([]byte, error) {
 	b, err := base85.DecodeString(txt)
