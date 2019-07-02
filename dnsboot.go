@@ -5,6 +5,7 @@ import (
 
 	"github.com/u6du/config"
 	"github.com/u6du/dns"
+	"github.com/u6du/zerolog/warn"
 )
 
 var HostBootDefault = "ip.6du.host"
@@ -52,6 +53,8 @@ func BootLi(network uint8) []*net.UDPAddr {
 						ipLi = t
 					}
 					if timeoutCount > 1 {
+
+						warn.Msg("IPV" + networkString + " using expired boot ip")
 						return true
 					} else {
 						timeoutCount++

@@ -22,6 +22,8 @@ github.com/u6du/key v0.0.0-20190702090336-f72adf97ec50 h1:yN7BwlXSkzz/Dqe+LouyVc
 github.com/u6du/key v0.0.0-20190702090336-f72adf97ec50/go.mod h1:Bcb80kG/6+mpzEqZ0aRQ5FD90dYAkCQkdQHDchiRngE=
 github.com/u6du/zerolog v1.15.5 h1:KORysQasJbmgnxHeCyVPKy+/2O4vH/Zu4TY3hy8GgJA=
 github.com/u6du/zerolog v1.15.5/go.mod h1:3hKLkFf0N4kVAQIRWo0LfTpNQo7eQ3nRwcoUPLBen00=
+github.com/u6du/zerolog v1.15.6 h1:90Oe1sklUEY/CXZMuSkkAe7oSQo/R8P1GeQE8iFpDeM=
+github.com/u6du/zerolog v1.15.6/go.mod h1:3hKLkFf0N4kVAQIRWo0LfTpNQo7eQ3nRwcoUPLBen00=
 github.com/urfave/cli v1.20.0/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
 github.com/zenazn/goji v0.9.0/go.mod h1:7S9M489iMyHBNxwZnk9/EHS098H4/F6TATF2mIxtB1Q=
 golang.org/x/arch v0.0.0-20181203225421-5a4828bb7045/go.mod h1:cYlCBUl1MsqxdiKgmc4uh7TxZfWSFLOGSRR090WDxt8=
