@@ -2,6 +2,7 @@ package dnsboot
 
 import (
 	"net"
+	"sync"
 
 	"github.com/u6du/config"
 	"github.com/u6du/dns"
@@ -10,6 +11,22 @@ import (
 
 var HostBootDefault = "ip.6du.host"
 var HostBootPath = "dns/host/boot/"
+
+func BootLi46() ([]*net.UDPAddr, []*net.UDPAddr) {
+	wait := sync.WaitGroup{}
+	wait.Add(2)
+	var v4, v6 []*net.UDPAddr
+	go func() {
+		defer wait.Done()
+		v4 = BootLi(4)
+	}()
+	go func() {
+		defer wait.Done()
+		v6 = BootLi(6)
+	}()
+	wait.Wait()
+	return v4, v6
+}
 
 func BootLi(network uint8) []*net.UDPAddr {
 	nameserver := dns.DNS[network]
